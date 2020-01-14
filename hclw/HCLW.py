@@ -13,12 +13,48 @@ class HCLW:
         self.encoding = encoding
 
     def initialize_api_types(self):
+        # TODO Simpler type initialization/declaration (ex: split into static methods in classes)
+        # Common functions
         self.hcl_library.GetBasicAuthString.argtypes = [ctypes.c_char_p, ctypes.c_char_p]
         self.hcl_library.GetBasicAuthString.restype = ctypes.c_void_p
         self.hcl_library.GetCharArrayFromString.argtypes = [ctypes.c_void_p]
         self.hcl_library.GetCharArrayFromString.restype = ctypes.c_char_p
         self.hcl_library.DeleteString.argtypes = [ctypes.c_void_p]
         self.hcl_library.DeleteString.restype = None
+        # Secret functions
+        self.hcl_library.GetSecretFromContent.argtypes = [ctypes.c_char_p]
+        self.hcl_library.GetSecretFromContent.restype = ctypes.c_void_p
+        self.hcl_library.GetNameFromSecret.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetNameFromSecret.restype = ctypes.c_char_p
+        self.hcl_library.GetLoginFromSecret.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetLoginFromSecret.restype = ctypes.c_char_p
+        self.hcl_library.GetPasswordFromSecret.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetPasswordFromSecret.restype = ctypes.c_char_p
+        self.hcl_library.GetDomainFromSecret.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetDomainFromSecret.restype = ctypes.c_char_p
+        self.hcl_library.UpdateSecretName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdateSecretLogin.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdateSecretPassword.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdateSecretDomain.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.GetContentStringFromSecret.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetContentStringFromSecret.restype = ctypes.c_void_p
+        self.hcl_library.DeleteSecret.argtypes = [ctypes.c_void_p]
+        # User functions
+        self.hcl_library.CreateUser.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p]
+        self.hcl_library.CreateUser.restype = ctypes.c_void_p
+        self.hcl_library.GetEmailFromUser.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetEmailFromUser.restype = ctypes.c_char_p
+        self.hcl_library.GetPasswordFromUser.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetPasswordFromUser.restype = ctypes.c_char_p
+        self.hcl_library.GetFirstNameFromUser.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetFirstNameFromUser.restype = ctypes.c_char_p
+        self.hcl_library.GetLastNameFromUser.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetLastNameFromUser.restype = ctypes.c_char_p
+        self.hcl_library.UpdateUserEmail.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdateUserPassword.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdateUserFirstName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdateUserLastName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.DeleteUser.argtypes = [ctypes.c_void_p]
 
     def encode_string(self, string):
         return string.encode(self.encoding)
