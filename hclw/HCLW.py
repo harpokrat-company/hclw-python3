@@ -9,7 +9,16 @@ class HCLW:
         if hcl_library_name is None:
             raise ModuleNotFoundError('Library HCL (Harpokrat Cryptographic Library) not found')
         self.hcl_library = ctypes.cdll.LoadLibrary(hcl_library_name)
+        self.initialize_api_types()
         self.encoding = encoding
+
+    def initialize_api_types(self):
+        self.hcl_library.GetBasicAuthString.argtypes = [ctypes.c_char_p, ctypes.c_char_p]
+        self.hcl_library.GetBasicAuthString.restype = ctypes.c_void_p
+        self.hcl_library.GetCharArrayFromString.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetCharArrayFromString.restype = ctypes.c_char_p
+        self.hcl_library.DeleteString.argtypes = [ctypes.c_void_p]
+        self.hcl_library.DeleteString.restype = None
 
     def encode_string(self, string):
         return string.encode(self.encoding)
