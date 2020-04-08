@@ -4,15 +4,20 @@ from hclw.HCLW import HCLW
 
 
 class Secret:
-    def __init__(self, wrapper: HCLW, content):
+    def __init__(self, wrapper: HCLW, key=None, content=None):
         self.wrapper = wrapper
-        self.hcl_secret = self.wrapper.hcl_library.GetSecretFromContent(self.wrapper.encode_string(content))
+        if key is None or content is None:
+            self.hcl_secret = self.wrapper.hcl_library.CreateSecret()
+        else:
+            self.hcl_secret = self.wrapper.hcl_library.GetSecretFromContent(self.wrapper.encode_string(key),
+                                                                            self.wrapper.encode_string(content))
 
     def __del__(self):
         self.hcl_library.DeleteSecret(self.hcl_secret)
 
-    def get_raw_content(self):
-        return self.wrapper.decode_hcl_string(self.hcl_library.GetContentStringFromSecret(self.hcl_secret))
+    def get_raw_content(self, key):
+        return self.wrapper.decode_hcl_string(
+            self.hcl_library.GetContentStringFromSecret(self.hcl_secret, self.wrapper.encode_string(key)))
 
     @property
     def hcl_library(self):
@@ -49,3 +54,7 @@ class Secret:
     @domain.setter
     def domain(self, domain):
         self.hcl_library.UpdateSecretDomain(self.hcl_secret, self.wrapper.encode_string(domain))
+
+    @property
+    def correct_decryption(self):
+        return self.hcl_library.CorrectSecretDecryption(self.hcl_secret)

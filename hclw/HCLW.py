@@ -22,8 +22,12 @@ class HCLW:
         self.hcl_library.DeleteString.argtypes = [ctypes.c_void_p]
         self.hcl_library.DeleteString.restype = None
         # Secret functions
-        self.hcl_library.GetSecretFromContent.argtypes = [ctypes.c_char_p]
+        self.hcl_library.GetSecretFromContent.argtypes = [ctypes.c_char_p, ctypes.c_char_p]
         self.hcl_library.GetSecretFromContent.restype = ctypes.c_void_p
+        self.hcl_library.CreateSecret.argtypes = []
+        self.hcl_library.CreateSecret.restype = ctypes.c_void_p
+        self.hcl_library.CorrectSecretDecryption.argtypes = [ctypes.c_void_p]
+        self.hcl_library.CorrectSecretDecryption.restype = ctypes.c_bool
         self.hcl_library.GetNameFromSecret.argtypes = [ctypes.c_void_p]
         self.hcl_library.GetNameFromSecret.restype = ctypes.c_char_p
         self.hcl_library.GetLoginFromSecret.argtypes = [ctypes.c_void_p]
@@ -36,7 +40,7 @@ class HCLW:
         self.hcl_library.UpdateSecretLogin.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.UpdateSecretPassword.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.UpdateSecretDomain.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        self.hcl_library.GetContentStringFromSecret.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetContentStringFromSecret.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.GetContentStringFromSecret.restype = ctypes.c_void_p
         self.hcl_library.DeleteSecret.argtypes = [ctypes.c_void_p]
         # User functions
