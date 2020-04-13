@@ -17,6 +17,8 @@ class HCLW:
         # Common functions
         self.hcl_library.GetBasicAuthString.argtypes = [ctypes.c_char_p, ctypes.c_char_p]
         self.hcl_library.GetBasicAuthString.restype = ctypes.c_void_p
+        self.hcl_library.GetDerivedKey.argtypes = [ctypes.c_char_p]
+        self.hcl_library.GetDerivedKey.restype = ctypes.c_void_p
         self.hcl_library.GetCharArrayFromString.argtypes = [ctypes.c_void_p]
         self.hcl_library.GetCharArrayFromString.restype = ctypes.c_char_p
         self.hcl_library.DeleteString.argtypes = [ctypes.c_void_p]
@@ -79,4 +81,8 @@ class HCLW:
     # TODO Move following to clean separated classes
     def get_basic_auth(self, email, password):
         auth = self.hcl_library.GetBasicAuthString(self.encode_string(email), self.encode_string(password))
+        return self.decode_hcl_string(auth)
+
+    def get_derived_key(self, password):
+        auth = self.hcl_library.GetDerivedKey(self.encode_string(password))
         return self.decode_hcl_string(auth)
