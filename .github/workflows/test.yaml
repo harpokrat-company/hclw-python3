@@ -1,0 +1,32 @@
+name: Test
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Set up Python 3.8
+              uses: actions/setup-python@v1
+              with:
+                  python-version: 3.8
+            - name: Get HCL
+              uses: actions/checkout@v2
+              with:
+                  repository: harpokrat-company/hcl
+                  path: .hcl
+                  ref: v0.0.1
+                  ssh-key: ${{ secrets.SSH_HCL }}
+            - name: Setup HCL
+              run: |
+                  cd .hcl
+                  cmake .
+                  make
+                  sudo cp libhcl.so /usr/lib/libhcl.so.0
+                  sudo ldconfig
+                  cd ..
+            - name: Run test
+              run: |
+                  python3 -m pip install .
+                  python3 test/test.py
