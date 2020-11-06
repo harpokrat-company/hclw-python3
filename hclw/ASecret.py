@@ -19,7 +19,7 @@ class ASecret:
 
     def serialize(self, key):
         return self.wrapper.decode_hcl_string(
-            self.hcl_library.SerializeSecret(self.hcl_secret, key.hcl_secret))
+            self.hcl_library.SerializeSecret(self.hcl_secret, self.wrapper.encode_string(key.key)))
 
     @property
     def hcl_library(self):
