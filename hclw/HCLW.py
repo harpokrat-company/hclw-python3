@@ -124,5 +124,8 @@ class HCLW:
     def deserialize_secret(self, key, serialized_content):
         return self.hcl_library.DeserializeSecret(self.encode_string(key.key), self.encode_string(serialized_content))
 
+    def correct_secret_decryption(self, secret):
+        return self.hcl_library.CorrectSecretDecryption(secret)
+
     def get_secret_type_name(self, secret):
         return self.decode_hcl_string(self.hcl_library.GetSecretTypeName(secret))
