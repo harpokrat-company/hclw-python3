@@ -9,7 +9,7 @@ class ASecret:
         self.hcl_secret = secret
 
     def __del__(self):
-        self.hcl_library.DeleteASecret(self.hcl_secret)
+        self.hcl_library.DeleteSecret(self.hcl_secret)
 
     def initialize_asymmetric(self):
         self.hcl_library.SecretInitializeAsymmetricCipher(self.hcl_secret)
