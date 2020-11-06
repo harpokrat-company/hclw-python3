@@ -23,28 +23,6 @@ class HCLW:
         self.hcl_library.GetCharArrayFromString.restype = ctypes.c_char_p
         self.hcl_library.DeleteString.argtypes = [ctypes.c_void_p]
         self.hcl_library.DeleteString.restype = None
-        # Secret functions
-        self.hcl_library.GetSecretFromContent.argtypes = [ctypes.c_char_p, ctypes.c_char_p]
-        self.hcl_library.GetSecretFromContent.restype = ctypes.c_void_p
-        self.hcl_library.CreateSecret.argtypes = []
-        self.hcl_library.CreateSecret.restype = ctypes.c_void_p
-        self.hcl_library.CorrectSecretDecryption.argtypes = [ctypes.c_void_p]
-        self.hcl_library.CorrectSecretDecryption.restype = ctypes.c_bool
-        self.hcl_library.GetNameFromSecret.argtypes = [ctypes.c_void_p]
-        self.hcl_library.GetNameFromSecret.restype = ctypes.c_char_p
-        self.hcl_library.GetLoginFromSecret.argtypes = [ctypes.c_void_p]
-        self.hcl_library.GetLoginFromSecret.restype = ctypes.c_char_p
-        self.hcl_library.GetPasswordFromSecret.argtypes = [ctypes.c_void_p]
-        self.hcl_library.GetPasswordFromSecret.restype = ctypes.c_char_p
-        self.hcl_library.GetDomainFromSecret.argtypes = [ctypes.c_void_p]
-        self.hcl_library.GetDomainFromSecret.restype = ctypes.c_char_p
-        self.hcl_library.UpdateSecretName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        self.hcl_library.UpdateSecretLogin.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        self.hcl_library.UpdateSecretPassword.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        self.hcl_library.UpdateSecretDomain.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        self.hcl_library.GetContentStringFromSecret.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        self.hcl_library.GetContentStringFromSecret.restype = ctypes.c_void_p
-        self.hcl_library.DeleteSecret.argtypes = [ctypes.c_void_p]
         # User functions
         self.hcl_library.CreateUser.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p, ctypes.c_char_p]
         self.hcl_library.CreateUser.restype = ctypes.c_void_p
@@ -61,6 +39,62 @@ class HCLW:
         self.hcl_library.UpdateUserFirstName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.UpdateUserLastName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.DeleteUser.argtypes = [ctypes.c_void_p]
+        # RSAKeyPair functions
+        self.hcl_library.GenerateRSAKeyPair.argtypes = [ctypes.c_int64]
+        self.hcl_library.GenerateRSAKeyPair.restype = ctypes.c_void_p
+        self.hcl_library.GetPublicKeyFromRSAKeyPair.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetPublicKeyFromRSAKeyPair.restype = ctypes.c_void_p
+        self.hcl_library.GetPrivateKeyFromRSAKeyPair.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetPrivateKeyFromRSAKeyPair.restype = ctypes.c_void_p
+        self.hcl_library.DeleteRSAKeyPair.argtypes = [ctypes.c_void_p]
+        # ASecret functions
+        self.hcl_library.DeserializeSecret.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.DeserializeSecret.restype = ctypes.c_void_p
+        self.hcl_library.SerializeSecret.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
+        self.hcl_library.SerializeSecret.restype = ctypes.c_void_p
+        self.hcl_library.GetSecretCorrectDecryption.argtypes = []
+        self.hcl_library.GetSecretCorrectDecryption.restype = ctypes.c_bool
+        self.hcl_library.SecretInitializeAsymmetricCipher.argtypes = []
+        self.hcl_library.SecretInitializeSymmetricCipher.argtypes = []
+        self.hcl_library.GetSecretTypeName.argtypes = []
+        self.hcl_library.GetSecretTypeName.restype = ctypes.c_void_p
+        self.hcl_library.DeleteSecret.argtypes = []
+        # Password functions
+        self.hcl_library.CreatePassword.argtypes = []
+        self.hcl_library.CreatePassword.restype = ctypes.c_void_p
+        self.hcl_library.GetNameFromPassword.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetNameFromPassword.restype = ctypes.c_char_p
+        self.hcl_library.GetLoginFromPassword.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetLoginFromPassword.restype = ctypes.c_char_p
+        self.hcl_library.GetPasswordFromPassword.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetPasswordFromPassword.restype = ctypes.c_char_p
+        self.hcl_library.GetDomainFromPassword.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetDomainFromPassword.restype = ctypes.c_char_p
+        self.hcl_library.UpdatePasswordName.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdatePasswordLogin.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdatePasswordPassword.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.UpdatePasswordDomain.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        # RSAPrivateKey functions
+        self.hcl_library.GetOwnerFromPrivateKey.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetOwnerFromPrivateKey.restype = ctypes.c_char_p
+        self.hcl_library.SetPrivateKeyOwner.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.DecryptMessageWithPrivateKey.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.DecryptMessageWithPrivateKey.restype = ctypes.c_void_p
+        # RSAPublicKey functions
+        self.hcl_library.GetOwnerFromPublicKey.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetOwnerFromPublicKey.restype = ctypes.c_char_p
+        self.hcl_library.SetPublicKeyOwner.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.EncryptMessageWithPublicKey.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.EncryptMessageWithPublicKey.restype = ctypes.c_void_p
+        # SymmetricKey functions
+        self.hcl_library.CreateSymmetricKey.argtypes = []
+        self.hcl_library.CreateSymmetricKey.restype = ctypes.c_void_p
+        self.hcl_library.GetOwnerFromSymmetricKey.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetOwnerFromSymmetricKey.restype = ctypes.c_char_p
+        self.hcl_library.SetSymmetricKeyOwner.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        self.hcl_library.GetKeyFromSymmetricKey.argtypes = [ctypes.c_void_p]
+        self.hcl_library.GetKeyFromSymmetricKey.restype = ctypes.c_char_p
+        self.hcl_library.SetSymmetricKeyKey.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
 
     def encode_string(self, string):
         return string.encode(self.encoding)
@@ -86,3 +120,9 @@ class HCLW:
     def get_derived_key(self, password):
         auth = self.hcl_library.GetDerivedKey(self.encode_string(password))
         return self.decode_hcl_string(auth)
+
+    def deserialize_secret(self, key, serialized_content):
+        return self.hcl_library.DeserializeSecret(self.encode_string(key.key), self.encode_string(serialized_content))
+
+    def get_secret_type_name(self, secret):
+        return self.decode_hcl_string(self.hcl_library.GetSecretTypeName(secret))
