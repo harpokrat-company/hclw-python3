@@ -58,7 +58,7 @@ class HCLW:
         self.hcl_library.SecretInitializeSymmetricCipher.argtypes = []
         self.hcl_library.GetSecretTypeName.argtypes = []
         self.hcl_library.GetSecretTypeName.restype = ctypes.c_void_p
-        self.hcl_library.DeleteSecret.argtypes = []
+        self.hcl_library.DeleteSecret.argtypes = [ctypes.c_void_p]
         # Password functions
         self.hcl_library.CreatePassword.argtypes = []
         self.hcl_library.CreatePassword.restype = ctypes.c_void_p
@@ -80,12 +80,16 @@ class HCLW:
         self.hcl_library.SetPrivateKeyOwner.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.DecryptMessageWithPrivateKey.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.DecryptMessageWithPrivateKey.restype = ctypes.c_void_p
+        self.hcl_library.ExtractKeyFromPrivateKey.argtypes = [ctypes.c_void_p]
+        self.hcl_library.ExtractKeyFromPrivateKey.restype = ctypes.c_void_p
         # RSAPublicKey functions
         self.hcl_library.GetOwnerFromPublicKey.argtypes = [ctypes.c_void_p]
         self.hcl_library.GetOwnerFromPublicKey.restype = ctypes.c_char_p
         self.hcl_library.SetPublicKeyOwner.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.EncryptMessageWithPublicKey.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
         self.hcl_library.EncryptMessageWithPublicKey.restype = ctypes.c_void_p
+        self.hcl_library.ExtractKeyFromPublicKey.argtypes = [ctypes.c_void_p]
+        self.hcl_library.ExtractKeyFromPublicKey.restype = ctypes.c_void_p
         # SymmetricKey functions
         self.hcl_library.CreateSymmetricKey.argtypes = []
         self.hcl_library.CreateSymmetricKey.restype = ctypes.c_void_p
@@ -95,6 +99,8 @@ class HCLW:
         self.hcl_library.GetKeyFromSymmetricKey.argtypes = [ctypes.c_void_p]
         self.hcl_library.GetKeyFromSymmetricKey.restype = ctypes.c_char_p
         self.hcl_library.SetSymmetricKeyKey.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
+        # RSAKey functions
+        self.hcl_library.DeleteRSAKey.argtypes = [ctypes.c_void_p]
 
     def encode_string(self, string):
         return string.encode(self.encoding)
@@ -123,6 +129,12 @@ class HCLW:
 
     def deserialize_secret(self, key, serialized_content):
         return self.hcl_library.DeserializeSecret(self.encode_string(key.key), self.encode_string(serialized_content))
+
+    def deserialize_secret_asymmetric(self, key, serialized_content):
+        rsa_key = self.hcl_library.ExtractKeyFromPrivateKey(key)
+        secret = self.hcl_library.DeserializeSecretAsymmetric(rsa_key, self.encode_string(serialized_content))
+        self.hcl_library.DeleteRSAKey(rsa_key)
+        return secret
 
     def correct_secret_decryption(self, secret):
         return self.hcl_library.CorrectSecretDecryption(secret)
